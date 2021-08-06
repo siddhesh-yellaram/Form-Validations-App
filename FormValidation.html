@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="angular.js"></script>
+    <style>
+        input.ng-valid {
+            background-color: lightgreen;
+        }
+
+        input.ng-invalid {
+            background-color: lightpink;
+        }
+
+        .form-container {
+            padding: 20px;
+        }
+    </style>
+    <title>Form Validations</title>
+</head>
+
+<body>
+    <div class="form-container">
+        <form ng-app="formApp" ng-controller="validateForm" name="myForm">
+            <p>Name:<br>
+                <input type="text" name="name" ng-model="name" required>
+                <span style="color: red" ng-show="myForm.name.$dirty && myForm.name.$invalid">
+                    <span ng-show="myForm.name.$error.required">Name is required!!</span>
+                </span>
+            </p>
+
+            <p>Email:<br>
+                <input type="email" name="email" ng-model="email" required>
+                <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+                    <span ng-show="myForm.email.$error.required">Email is required!!!</span>
+                    <span ng-show="myForm.email.$error.email">Invalid email address!!!</span>
+                </span>
+            </p>
+
+            <p>Salary:<br>
+                <input type="number" name="salary" ng-model="salary" required>
+                <span style="color: red;" ng-show="myForm.salary.$dirty && myForm.salary.$invalid">
+                    <span ng-show="myForm.salary.$error.required">Salary is required!!</span>
+                </span>
+            </p>
+
+            <p>
+                <input type="submit" class="btn btn-outline-success"
+                    ng-disabled="myForm.user.$dirty && myForm.user.$invalid || myForm.email.$dirty && myForm.email.$invalid || myForm.salary.$dirty && myForm.salary.invalid"
+                    ng-click="display()">
+            </p>
+
+            <p>
+            <h5>Name: {{usrname}}</h5>
+            <h5>Email: {{usremail}}</h5>
+            <h5>Salary: {{usrsalary}}</h5>
+            </p>
+        </form>
+    </div>
+    <script>
+        var formApp = angular.module("formApp", []);
+        formApp.controller("validateForm", ['$scope', function ($scope) {
+            $scope.name = 'John Doe';
+            $scope.email = 'jd@gmail.com';
+            $scope.salary = 30000;
+            $scope.display = function () {
+                if ($scope.name != "" && $scope.email != "" && $scope.salary != "") {
+                    $scope.usrname = $scope.name;
+                    $scope.usremail = $scope.email;
+                    $scope.usrsalary = $scope.salary;
+                    return;
+                }
+            }
+        }])
+    </script>
+</body>
+
+</html>
